@@ -387,8 +387,181 @@ int main(int argc, const char * argv[]) {
         
         
         // MARK: - Sets
+        // Objective-C has two ways of creating sets. NSSet and NSCountedSet
+        // NSSet has mutable NSMutableSet
+        // NSCountedSet is automatically mutable
+        
+        NSSet *odd = [NSSet setWithObjects: @1, @3, @5, nil];
+        
+        NSSet *even = [NSSet setWithObjects: @2, @4, @6, nil];
+        
+        NSSet *combined = [odd setByAddingObjectsFromSet:even];
+        
+        NSMutableSet *mutable = [combined mutableCopy];
+        
+        [mutable addObject:@0];
+        
+        for (NSString *elementOfMutable in mutable) {
+            NSLog(@"%@", elementOfMutable);
+        }
+        
+        [mutable removeAllObjects];
+        
+        // NSCountedSet is powerful to count how many times something has appeared. It will appear only once in a set but NSCountedSet will keep counting anyway.
+        NSCountedSet *numbers = [NSCountedSet setWithObjects: @1, @1, @2, nil];
+        
+        for (NSNumber *value in numbers) {
+            NSLog(@"%@ appears %ld times", value, [numbers countForObject:value]);
+        }
         
         
+        // MARK: - Generics
+        
+        
+        NSArray *namesGeneric = @[@"Kuba", @"Maks", @"Kalin"];
+        
+        for (NSString *name in namesGeneric) {
+            NSLog(@"%@ has %ld letters", name, [name length]);
+        }
+        
+        NSArray *numbersGenerics = @[@1, @2, @3];
+        
+        NSNumber *numberGeneric = numbersGenerics[0];
+        NSLog(@"%@", numberGeneric);
+        
+        
+        for (NSNumber *number in numbersGenerics) {
+            NSLog(@"%@ has 0 letters cause it's a number!", number);
+        }
+        
+        
+        // There are generics in Objective-C but there are not much powerful compare to Swift's generics
+        
+        NSMutableArray<NSString *> *namesGenerics2 = [NSMutableArray arrayWithObjects:@"Kuba", @"Marta", @"Karolina", nil];
+        [namesGenerics2 addObject:@"Marcin"];
+        
+        // arrayWithCapacity defines capacity but appareantly it doesn't matter. Array expands when needed
+        NSMutableArray<NSString *> *namesGenerics3 = [NSMutableArray arrayWithCapacity:2];
+        [namesGenerics3 addObject:@"Andrzej"];
+        [namesGenerics3 addObject:@"Andrzej2"];
+        [namesGenerics3 addObject:@"Andrzej3"];
+        [namesGenerics3 addObject:@"Andrzej4"];
+        [namesGenerics3 addObject:@"Andrzej5"];
+        
+        for (NSString *name in namesGenerics3) {
+            NSLog(@"name %@ has %ld letters", name, [name length]);
+        }
+//        [namesGenerics3 addObject:@3]; that will not work
+     
+        // In that example, even when we specified that NSArray is of type NSNumber, you can still print using NSNumber or using NSString
+        NSArray<NSNumber *> *numbersGenerics2 = @[@1, @2, @3, @4];
+        
+        for (NSString *number in numbersGenerics2) {
+            NSLog(@"%@", number);
+        }
+        
+        for (NSNumber *number in numbersGenerics2) {
+            NSLog(@"%@", number);
+        }
+        
+        // Generics will work the same with with Dictionaries and Sets
+        // For Dictionaries you do need to specify types for keys and values:
+        
+        NSDictionary<NSString *, NSNumber *> *dictionaryGenerics = @{
+            @"Karolina":    @5,
+            @"Mama":        @6
+        };
+        
+        [dictionaryGenerics enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSNumber *obj, BOOL *stop) {
+            if ([key isEqual:@"Karolina"]) {
+                NSLog(@"%@ was found and the number is %@", key, obj);
+                NSLog(@"We are breaking the loop");
+                *stop = YES;
+            } else {
+                NSLog(@"%@", key);
+            }
+        }];
+        
+        // MARK: - NSObject
+        // Objective-C has universal base class called NSObject, which is where almost every other class inherits from
+        // UIViewController inherits from UIResponder, which in turn inherits from NSObject.
+        // Swift classes dont have this concept but classes in Swift can confirm to NSObject
+        
+        // Behind the scenes, NSObject is implemented as both a class and a protocol
+        
+        // copy or mutable uses NSObject:
+        NSMutableDictionary *dictionaryCopy = [dictionaryGenerics copy];
+        // With respondsToSelector we can check if given object is compatibile with the method
+        if ([dictionaryCopy respondsToSelector:@selector(removeAllObjects)]) {
+            [dictionaryCopy removeAllObjects];
+        } else {
+            NSLog(@"dictionaryGenerics will not respond to the selector removeAllObjects");
+        }
+        
+        
+        //
+        
+        NSMutableArray *people = [NSMutableArray arrayWithObjects: @"Kuba", @"Kalin", @"Marta", nil];
+        
+        // mutable copy
+        NSMutableArray *peopleCopy = [people mutableCopy];
+        
+        // isKindOfClass will check peopleCopy is of given class or a subclass of given class
+        if ([peopleCopy isKindOfClass:[NSArray class]]) {
+            // respondsToSelector will check if given object (type of it) responds to given method
+            if ([people respondsToSelector:@selector(removeAllObjects)]) {
+                [people performSelector:@selector(removeAllObjects)];
+            }
+        }
+        
+        if ([people count] == 0) {
+            NSLog(@"Array of people is empty as it supposed to be!");
+        }
+        
+        
+        // MARK: - id and instancetype
+        
+        // Very little about this code, for more go to book again
+        
+        // MARK: - NSError
+        
+        // That creates a new NSError called error
+        // That gets created to nil
+        NSError *error;
+        // If error will appear when creating that NSString, error will point to a pointer of that error
+        NSString *contents = [NSString stringWithContentsOfFile:@"Hello.txt" usedEncoding:nil error:&error];
+        
+        if (contents == nil) {
+            NSLog(@"%@", error);
+        } else {
+            NSLog(@"%@", contents);
+        }
+        // Its very unlikely that you will see NSError throught the development as it was replaced with try/catch blocks
+    
+        
+        // MARK: - Blocks (Closures)
+        // Blocks in Objective-C are quite complicated
+        
+        void (^printUniversalGreeting)(void) = ^{
+            NSLog(@"Hello everyone");
+        };
+        // Let's break it down
+        // void                         - The block returns nothing
+        // (^printUniversalGreeting)    - Put the block into variable called "printUniversalGreeting"
+        // (void)                       - The block accepts no parameters
+        // = ^{...}                     - The contents of the block
+        printUniversalGreeting();
+        
+        
+        // Using that knowledge, we coud make a block that returns a stirng just by chaning the first void:
+        NSString* (^universalGreetingReturningNSString)(void) = ^{
+            return @"Hello Everyone. I am a string and I have been returned";
+        };
+        
+        NSString *greetingsAsString = [universalGreetingReturningNSString() copy];
+        
+        NSLog(@"%@", universalGreetingReturningNSString());
+        NSLog(@"%@", greetingsAsString);
     }
     return 0;
 }
