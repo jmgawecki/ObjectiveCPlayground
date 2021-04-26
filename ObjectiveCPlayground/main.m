@@ -553,7 +553,7 @@ int main(int argc, const char * argv[]) {
         printUniversalGreeting();
         
         
-        // Using that knowledge, we coud make a block that returns a stirng just by chaning the first void:
+        // Using that knowledge, we coud make a block that returns a string just by changing the first void:
         NSString* (^universalGreetingReturningNSString)(void) = ^{
             return @"Hello Everyone. I am a string and I have been returned";
         };
@@ -562,6 +562,25 @@ int main(int argc, const char * argv[]) {
         
         NSLog(@"%@", universalGreetingReturningNSString());
         NSLog(@"%@", greetingsAsString);
+        
+        // Now lets do it with calling a parameter
+        NSString* (^greetingsWithTheName)(NSString *) = ^(NSString *name) {
+            return [NSString stringWithFormat:@"Hello %@", name];
+        };
+        
+        NSLog(@"%@", greetingsWithTheName(@"Kuba"));
+        
+        
+        // If you would like to modify a variable from outside the block, inside that block you need to use __block
+        
+        __block NSInteger numberrro = 0;
+        
+        NSString* (^howManyRoads)(void) = ^{
+            numberrro = 1;
+            return [NSString stringWithFormat:@"How many roads? %ld!", numberrro];
+        };
+        
+        NSLog(@"%@", howManyRoads());
     }
     return 0;
 }
