@@ -145,6 +145,11 @@ int main(int argc, const char * argv[]) {
         NSInteger longInteger = 1239837498127349874;
         NSLog(@"%ld", (long)longInteger);
         
+        // String interpolation for printing the descirption of NSNumber. We are using @
+        NSNumber *integerTwelve = @12;
+        
+        NSLog(@"%@", integerTwelve);
+        
         
         // MARK: - String
         
@@ -186,11 +191,204 @@ int main(int argc, const char * argv[]) {
         
         // MARK: - NSNumber
         // NSNumber is a class to store numbers of any type from Objective-C
-        NSNumber * ten = [NSNumber numberWithInteger:19];
+        NSNumber *ten = [NSNumber numberWithInteger:10];
         
         float floatTen = [ten floatValue];
         
         NSLog(@"%f", floatTen);
+        
+        NSNumber *twelve = [NSNumber numberWithInteger:12];
+        
+        double doubleTwelve = [twelve doubleValue];
+        
+        NSLog(@"%f", doubleTwelve);
+        
+        // Shortcut version for creating NSNumber without brackets
+        
+        NSNumber *integerTen = @10;
+        
+        NSLog(@"%@", integerTen);
+        
+        
+        // MARK: - Arrays
+        
+        // There are NSArray and NSMutableArray
+        
+        // This literal @ was introduced to simplify the syntax. Another examples shows a different way to handle crreating an Array with specyfing its type
+        NSArray *villains = @[@"Megatron", @"Lord Voldemort", @"Loki"];
+        
+        for (NSString *villian in villains) {
+            NSLog(@"Can the Doctor defeat the %@? Yes he can!", villian);
+        }
+        
+        // This is the way without using @. When so, you need to remember about placing nil at the end but Xcode will do if for you anyway. Xcode needs to know where the arrays if finished.
+        NSArray *villainsNotSimplified = [NSArray arrayWithObjects: @"Megatron", @"Voldermort", @"Loki", nil];
+        
+        for (NSString *villain2 in villainsNotSimplified) {
+            NSLog(@"Can the Doctor defeat the %@? Yes he can!", villain2);
+        }
+        
+        
+        // Looping in reverse: reverseObjectEnumerator
+        for (NSString *villian in [villains reverseObjectEnumerator]) {
+            NSLog(@"Can the doctor defeat the %@? Yes he can!", villian);
+        }
+        
+        // We can index from the array just like in Swift from 0
+        NSLog(@"%@", villains[0]);
+        
+        // Anything written before 2012 will use objectAtIndex: x
+        
+        NSLog(@"%@", [villains objectAtIndex:0]);
+        
+        
+        // That creates a variable that counts elements of the arrya
+        NSUInteger villainsCounter = [villains count];
+        
+        NSLog(@"%lu", (unsigned long)villainsCounter);
+        
+        // Another example of count straight to print out
+        NSLog(@"The Doctor faced %ld villians in that episode.", (long)[villains count]);
+        
+        
+        // returns the location of an item in an array
+        NSLog(@"Loki is villian number %ld", (long)[villains indexOfObject:@"Loki"]);
+        
+        // If you call indexOfObject for not existing object in an array, you will receive NSNotFound value which is a very large integer. 9223372036854775807 for 64 bit systems.
+        // Objective-C does not have optionals!!!
+        NSLog(@"Superman is villian number %ld", (long)[villains indexOfObject:@"Superman"]);
+        
+        
+        // Returns the object at the specified location
+        NSLog(@"The second villian was the %@", [villains objectAtIndex:1]);
+        
+        
+        // converts an array into a string, using another string as glue
+        NSLog(@"The doctor conquered these villains: %@", [villains componentsJoinedByString:@", "]);
+        
+        
+        // MARK: - Mutable Arrays
+        
+        // You can create mutable arrays either using initializers from the NSMutableArray class or by calling mutableCopy on an existing NSArray
+        NSMutableArray *villainsMutableCopy = [@[@"Loki", @"Lord Voldemort", @"Megatron"] mutableCopy];
+        
+        for (NSString *mutableVillain in villainsMutableCopy) {
+            NSLog(@"The doctor fought the %@", mutableVillain);
+        }
+        // If using indext outside the array, it will cause the crash, unlike in reading object with the method indexOfObject
+        // Inserting object with insertObject atIndex method
+        [villainsMutableCopy insertObject:@"Donald Duck" atIndex:1];
+        
+        // Removing object with removeObjectAtIndex
+        [villainsMutableCopy removeObjectAtIndex:1];
+        
+        // Removing all objects
+        [villainsMutableCopy removeAllObjects];
+        
+        
+        // MARK: - Arrays Sorting
+        // Objective-C does not provide soritng method unlike Swift for any data types.
+        // NSString provides us with compare method
+        // We can use compare to sort an array by using it with the sortedArrayUsingSelector method
+        // using @selector is similiar to Swift's #selector but it always requires to include a colon
+        NSArray *sortedVillains = [villains sortedArrayUsingSelector: @selector(compare:)];
+        
+        for (NSString *sortedVillain in sortedVillains) {
+            NSLog(@"%@", sortedVillain);
+        }
+        
+        
+        // MARK: - Functional Techniques
+        // More notes in Notes under Functional Techniques file
+        
+        [villains enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSLog(@"Can the Doctor defeat the %@? Yes he can!", obj);
+        }];
+        
+        // using that block allows us to create a conditional and extra variable pointing to boolean *stop. Once the value is changed, loop will stop
+        // obj is of type id which is an equivalent of Swift's AnyObject
+        // idx is an index
+        // *stop is pointing to false from the default
+        // if pointing is changed at some point, it iterating block will stop
+        [villains enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            if ([obj isEqualToString: @"Voldemort"]) {
+                NSLog(@"Can the Doctor defeat the %@? Oh, apparently not.", obj);
+                // we change the pointer to true so iteration will stop
+                *stop = true;
+            } else {
+                NSLog(@"Can the Doctor defeat the %@? Yes he can!", obj);
+            }
+        }];
+        
+        // NSPredicate is a logical condition that is used lately as a predicate.
+        // This needs to return something
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(id obj, NSDictionary *bindings) {
+            // We create a predicate that will check
+            // That components seperated by space will equal to 2
+            return [[obj componentsSeparatedByString:@" "] count] == 2;
+        }];
+        
+        // we use that predicate on villains's NSString to determine wether the NSString match the predicate. If it does then we insert it to newly created Array twoWordVillain
+        NSArray *twoWordsVillains = [villains filteredArrayUsingPredicate:predicate];
+        
+        for (NSString *filteredVillain in twoWordsVillains) {
+            NSLog(@"%@", filteredVillain);
+        }
+        
+        
+        // MARK: - Dictionaries
+        // NSDictionary is unordered
+        
+        NSDictionary *ships = @{
+            @"ORP Blyskawica":  @"Polish Naval Fleet WW2",
+            @"Bottle ship":     @"From my desk",
+            @"Executor":        @"Star Wars"
+        };
+        
+        // Here is the example of an older syntax before the one above was introduced
+        NSDictionary *shipsOldSyntax = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        @"Polish Naval Fleet WW2",  @"ORP Blyskawica",
+                                        @"From my desk",            @"Bottle ship",
+                                        @"Star Wars",               @"Executor",
+                                        nil];
+        
+        
+        // New version of printing out
+        for (NSString *key in ships) {
+            NSLog(@"The ship %@ featerus in %@", key, ships[key]);
+        }
+        
+        // Old version of printing out
+        for (NSString *key in shipsOldSyntax) {
+            NSLog(@"The ship %@ features in %@", key, [ships objectForKey:key]);
+        }
+        
+    
+        // MARK: Dictionaries, useful methods
+        // Dictionaries have count method, as well as allKeys and allValues that returns an array respectively
+        
+        NSLog(@"%ld", [ships count]);
+        
+        NSLog(@"%@", [ships allKeys]);
+        
+        NSLog(@"%@", [ships allValues]);
+        
+        // You will find enumerateKeysAndObjectsUsingBlock method, which works identically to the enumerateObjectsUsingBlock method of NSArray
+        
+        // we use isEqual to compare NSString
+        [ships enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+            if ([key  isEqual: @"ORP Blyskawica"]) {
+                NSLog(@"We found a ship from %@ and we will break the loop", value);
+                *stop = YES;
+            } else {
+                NSLog(@"tralala");
+            }
+        }];
+        
+        
+        // MARK: - Sets
+        
+        
     }
     return 0;
 }
