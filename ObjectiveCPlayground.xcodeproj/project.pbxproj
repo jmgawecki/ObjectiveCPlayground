@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF0C50B226398FF200B73CCF /* PersonNullabilityCheck.m in Sources */ = {isa = PBXBuildFile; fileRef = EF0C50B126398FF200B73CCF /* PersonNullabilityCheck.m */; };
 		EF296604260FB06600EF0834 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EF296603260FB06600EF0834 /* main.m */; };
+		EF96388226380C55001D5046 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = EF96388126380C55001D5046 /* Person.m */; };
+		EF96388626382DF0001D5046 /* Person2.m in Sources */ = {isa = PBXBuildFile; fileRef = EF96388526382DF0001D5046 /* Person2.m */; };
+		EF96388E26385EEC001D5046 /* PropertyClass.m in Sources */ = {isa = PBXBuildFile; fileRef = EF96388D26385EEC001D5046 /* PropertyClass.m */; };
+		EF96389226387521001D5046 /* NSString+Trimming.m in Sources */ = {isa = PBXBuildFile; fileRef = EF96389126387521001D5046 /* NSString+Trimming.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,8 +28,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		EF0C50B026398FF200B73CCF /* PersonNullabilityCheck.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonNullabilityCheck.h; sourceTree = "<group>"; };
+		EF0C50B126398FF200B73CCF /* PersonNullabilityCheck.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonNullabilityCheck.m; sourceTree = "<group>"; };
 		EF296600260FB06600EF0834 /* ObjectiveCPlayground */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ObjectiveCPlayground; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF296603260FB06600EF0834 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		EF96388026380C55001D5046 /* Person.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		EF96388126380C55001D5046 /* Person.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		EF96388426382DF0001D5046 /* Person2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Person2.h; sourceTree = "<group>"; };
+		EF96388526382DF0001D5046 /* Person2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Person2.m; sourceTree = "<group>"; };
+		EF96388C26385EEC001D5046 /* PropertyClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PropertyClass.h; sourceTree = "<group>"; };
+		EF96388D26385EEC001D5046 /* PropertyClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PropertyClass.m; sourceTree = "<group>"; };
+		EF96389026387521001D5046 /* NSString+Trimming.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Trimming.h"; sourceTree = "<group>"; };
+		EF96389126387521001D5046 /* NSString+Trimming.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Trimming.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +72,43 @@
 		EF296602260FB06600EF0834 /* ObjectiveCPlayground */ = {
 			isa = PBXGroup;
 			children = (
+				EF96388B26385ED4001D5046 /* PropertyClassExample */,
+				EF96388926382E0E001D5046 /* Person2 */,
+				EF96388826382E06001D5046 /* Person */,
 				EF296603260FB06600EF0834 /* main.m */,
+				EF96389026387521001D5046 /* NSString+Trimming.h */,
+				EF96389126387521001D5046 /* NSString+Trimming.m */,
+				EF0C50B026398FF200B73CCF /* PersonNullabilityCheck.h */,
+				EF0C50B126398FF200B73CCF /* PersonNullabilityCheck.m */,
 			);
 			path = ObjectiveCPlayground;
+			sourceTree = "<group>";
+		};
+		EF96388826382E06001D5046 /* Person */ = {
+			isa = PBXGroup;
+			children = (
+				EF96388026380C55001D5046 /* Person.h */,
+				EF96388126380C55001D5046 /* Person.m */,
+			);
+			path = Person;
+			sourceTree = "<group>";
+		};
+		EF96388926382E0E001D5046 /* Person2 */ = {
+			isa = PBXGroup;
+			children = (
+				EF96388426382DF0001D5046 /* Person2.h */,
+				EF96388526382DF0001D5046 /* Person2.m */,
+			);
+			path = Person2;
+			sourceTree = "<group>";
+		};
+		EF96388B26385ED4001D5046 /* PropertyClassExample */ = {
+			isa = PBXGroup;
+			children = (
+				EF96388C26385EEC001D5046 /* PropertyClass.h */,
+				EF96388D26385EEC001D5046 /* PropertyClass.m */,
+			);
+			path = PropertyClassExample;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -88,7 +137,7 @@
 		EF2965F8260FB06600EF0834 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1250;
 				TargetAttributes = {
 					EF2965FF260FB06600EF0834 = {
 						CreatedOnToolsVersion = 12.4;
@@ -118,7 +167,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF96388626382DF0001D5046 /* Person2.m in Sources */,
+				EF96388E26385EEC001D5046 /* PropertyClass.m in Sources */,
+				EF96388226380C55001D5046 /* Person.m in Sources */,
+				EF0C50B226398FF200B73CCF /* PersonNullabilityCheck.m in Sources */,
 				EF296604260FB06600EF0834 /* main.m in Sources */,
+				EF96389226387521001D5046 /* NSString+Trimming.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -180,6 +234,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -232,6 +287,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -239,6 +295,7 @@
 		EF296608260FB06600EF0834 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9HHDDYFD2W;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -250,6 +307,7 @@
 		EF296609260FB06600EF0834 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9HHDDYFD2W;
 				ENABLE_HARDENED_RUNTIME = YES;

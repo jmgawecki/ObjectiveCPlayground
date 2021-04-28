@@ -6,6 +6,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Person.h"
+#import "Person2.h"
+#import "NSString+Trimming.h"
+#import "PersonNullabilityCheck.h"
 /// int - This function returns an integer
 /// main - The function is named main()
 /// int argc - First parameter is called argc and its of type Int
@@ -13,7 +17,6 @@
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // MARK: - Variable Declaration
-        
         
         NSLog(@"Hello, World!");
         
@@ -122,6 +125,12 @@ int main(int argc, const char * argv[]) {
         
         check       = NO;
         check2      = FALSE;
+        
+        if (check == NO) {
+            if (check2 == YES) {
+                NSLog(@"Something");
+            }
+        }
         
         
         // MARK: - "String interpolation"
@@ -364,7 +373,7 @@ int main(int argc, const char * argv[]) {
         }
         
     
-        // MARK: Dictionaries, useful methods
+        // MARK: - Dictionaries, useful methods
         // Dictionaries have count method, as well as allKeys and allValues that returns an array respectively
         
         NSLog(@"%ld", [ships count]);
@@ -581,6 +590,111 @@ int main(int argc, const char * argv[]) {
         };
         
         NSLog(@"%@", howManyRoads());
+        
+        // MARK: - Classes and Objects
+        
+        Person *person = [Person new];
+        [person printGreeting];
+        [person printGreetingTo:@"Kuba! I came from the Person class from the method with the parameter!"];
+        [person printGreetingTo:@"Kuba" atTimeOfDay:@"morning"];
+        
+        // This is how we would assign the result of calling function to a dictionary
+        NSDictionary *greetingsDictionary = [person fetchGreetingTo:@"Kuba" atTimeOfDay:@"morning"];
+        NSLog(@"%@", greetingsDictionary);
+        
+        
+        // MARK: - Selectors
+        
+        // We can call functions through selectors
+        [person performSelector:@selector(printGreeting)];
+        
+        // We can call functions through selectors with parameters like this
+        [person performSelector:@selector(printGreetingTo:) withObject:@"Kuba"];
+        
+        /// WARNING!
+        // If you try to perform selector on a method that do not belong to a class (printGreetings is from Person2), the app will crash
+//        [person performSelector:@selector(printGreetings)];
+        
+        
+        // MARK: - Properties in Class
+        // Once we created a class Person2 that has one variable called name
+        Person2 *person2 = [Person2 new];
+        // Remember!! These two different formats of declaration mean exactly the same!
+        person2->name = [NSString stringWithFormat:@"Person2"];
+        person2->name = @"Person2";
+        
+        [person2 printGreetings];
+        
+        
+        // MARK: - Pure Properties in Class
+        // In Objective-C property is a method that gets and sets the value of an ivar (instance variable)
+        // There are a lot of ways to write properties. The easies one however is to write @property before
+      
+        // First method of declaring
+        person2.nameProperty = @"Kuba";
+        person2.nameProperty = [NSString stringWithFormat: @"Kuba"];
+        
+        // Second method of declaring
+        // Whenever you create a property, method setNAME/AGE/WHATEVER: will be created automatically and it's true for all classes
+        [person2 setNameProperty:@"Taylor"];
+        [person2 setAge:@23];
+        
+        [person2 printGreetingsWithProperty];
+    
+        
+        person2.nameProperty    = @"Jakub Gawecki";
+        person2.age             = @24;
+        
+        [person2 printGreetingsAndAge];
+        
+        
+        // MARK: - Property attributes in Class
+        
+        NSMutableString *mutableName = [NSMutableString stringWithString:@"Jakub"];
+        
+        person2.nameProperty        = mutableName;
+        person2.namePropertySame    = mutableName;
+        person2.namePropertyCopied  = mutableName;
+        
+        [person2 printGreetingsForAllKubas];
+        
+        // That updates the variable to an entirely new NSMutableString instance
+//        mutableName = [NSMutableString stringWithString:@"John"];
+        // That actually changes its string:
+        mutableName.string = @"John";
+//        NSLog(@"%@", mutableName);
+        // the result of that change is:
+        // properties in the class that were strong, change their value once printing a with the function
+        // the ones that have an attribute of copy, will not change as they copied a value, not referencing to it any longer
+        [person2 printGreetingsForAllKubas];
+        
+        
+        // MARK: - Class initializer
+        
+        // This is a method for initializing an object that has already created initialiser by hand.
+        // Seems like initialising method for Objective-C class is not required.
+        Person *personInit = [[Person alloc] initWithName:@"Jakub"];
+        [personInit printGreeting];
+        
+        
+        // MARK: - Categories for classes
+        // We created a file that is NSString+Trimming that is a category (extension in Swift)
+        // We created a method there for Trimming characters with white spaces
+        NSString *stringToTrim = @"     Jakub     ";
+        
+        NSLog(@"%@", stringToTrim);
+        // We used it here
+        NSString *stringTrimmed = [stringToTrim kg_stringByTrimming];
+        // It worked
+        NSLog(@"%@", stringTrimmed);
+        
+        
+        // MARK: - Nullability check
+        
+        PersonNullabilityCheck *personNullability = [[PersonNullabilityCheck alloc] initWithName:@"Jakub"];
+        NSString *greetings = [personNullability fetchGreetingsForTime:@"morning"];
+        
+        NSLog(@"%@", greetings);
     }
     return 0;
 }
