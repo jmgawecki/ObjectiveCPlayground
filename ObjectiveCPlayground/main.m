@@ -695,6 +695,14 @@ int main(int argc, const char * argv[]) {
         NSString *greetings = [personNullability fetchGreetingsForTime:@"morning"];
         
         NSLog(@"%@", greetings);
+        
+        
+        NSMutableString *s = [NSMutableString stringWithString:@"123"];
+         [s appendString:@"456"];
+        
+        NSLog(@"%@", s);
+        int(^foo)(int);
+        
     }
     return 0;
 }

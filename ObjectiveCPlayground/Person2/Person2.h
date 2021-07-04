@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)printGreetingsWithPropertySecondMethod;
 - (void)printGreetingsAndAge;
 - (void)printGreetingsForAllKubas;
+
 @end
 
 NS_ASSUME_NONNULL_END
